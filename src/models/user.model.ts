@@ -10,7 +10,13 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true,
-    }
+    },
+    refreshTokens: [
+{
+    token: String,   // ideally hashed
+    createdAt: Date
+  }
+]
 },  {
     timestamps: true
   })

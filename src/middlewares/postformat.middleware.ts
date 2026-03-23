@@ -1,13 +1,12 @@
 
 import { z } from "zod/mini"
-import { type Response,type NextFunction } from "express";
-import {type  CustomRequestPost } from "../types/post.interface.js";
+import { type Response, type NextFunction } from "express";
+import { type CustomRequestPost } from "../types/post.interface.js";
 
 export const requiredbodypost = z.object({
   title: z.string(),
-  user:z.string(),
-  content:z.string(),
-  tags:z.array(z.string())
+  content: z.string(),
+  tags: z.array(z.string())
 })
 
 export function checkpostfor(
@@ -15,8 +14,6 @@ export function checkpostfor(
   res: Response,
   next: NextFunction
 ) {
-  ;
-
   const parsedwithsuccess = requiredbodypost.safeParse(req.body);
 
 

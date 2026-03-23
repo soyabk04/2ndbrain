@@ -5,3 +5,7 @@ type data = z.infer<typeof requiredbodypost>
 export interface CustomRequestPost extends Request {
   validateddata?: data
 }
+
+export interface JwtPayloadCustom {
+  userid: string;
+}
