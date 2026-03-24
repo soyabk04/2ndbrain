@@ -11,9 +11,10 @@ export async function posting(req: CustomRequestPost, res: Response) {
 }
     const accessToken=jwt.verify(req.headers["accesstoken"],JWT_SECRET) as JwtPayloadCustom
     const user=accessToken.userid
+    const posttitle=title.toLowerCase()
         const post = await postModel.create({
             user,
-title,content,tags
+title:posttitle,content,tags
     })
     res.status(200).send({
         success: true,
@@ -31,7 +32,7 @@ res.status(200).send({
 })
 }
 
-export async function getallpost(req:Request,res:Response){
+export async function getallpost(req:CustomRequestPost,res:Response){
         if (!req.headers["accesstoken"] || typeof req.headers["accesstoken"] !== "string") {
   return res.status(401).send({ message: "No token" });
 }
@@ -39,7 +40,19 @@ export async function getallpost(req:Request,res:Response){
     const user=accessToken.userid
     const allposts=await postModel.find({user:user})
     res.status(200).send({
-        success:false,
+        success:true,
         allposts
+    })
+}
+
+export async function searchpost(req:Request,res:Response){
+        if (!req.headers["accesstoken"] || typeof req.headers["accesstoken"] !== "string") {
+  return res.status(401).send({ message: "No token" });
+}
+    const title=req.body.title.toLowerCase()
+    const post=await postModel.find({title:title})
+    res.status(200).send({
+        success:true,
+        post
     })
 }
